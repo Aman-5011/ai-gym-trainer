@@ -7,6 +7,32 @@ import squat_logic as squat
 import pushup_logic as pushup
 import bicep_logic as bicep
 
+# ===== ADDED HEART RATE INTEGRATION START =====
+import requests
+import threading
+
+current_bpm = 0
+HEART_RATE_LIMIT = 120
+
+def fetch_heart_rate():
+    global current_bpm
+    while True:
+        try:
+            # Fetch data from ESP32 with a short timeout to prevent hangs
+            response = requests.get("http://10.178.10.14/data", timeout=0.5)
+            if response.status_code == 200:
+                data = response.json()
+                current_bpm = data.get("bpm", 0)
+        except Exception:
+            # Fails silently in the background if connection drops
+            pass
+        time.sleep(1)
+
+# Start the background thread
+hr_thread = threading.Thread(target=fetch_heart_rate, daemon=True)
+hr_thread.start()
+# ===== ADDED HEART RATE INTEGRATION END =====
+
 def main():
     """
     Main orchestration script for the AI Gym Trainer.
@@ -32,7 +58,7 @@ def main():
         return
 
     # 3. Hardware & Pose Engine Setup
-    cap = cv2.VideoCapture('vlog2.mp4')
+    cap = cv2.VideoCapture('vlog1.mp4')
     detector = pm.poseDetector()
     p_time = 0
     
@@ -110,6 +136,12 @@ def main():
                     cv2.rectangle(img, (display_w//2 - 150, 0), (display_w//2 + 150, 40), (0, 0, 255), cv2.FILLED)
                     cv2.putText(img, res["warnings"][0], (display_w//2 - 130, 30), 
                                 cv2.FONT_HERSHEY_DUPLEX, 0.7, (255, 255, 255), 1)
+
+            # ===== ADDED HEART RATE INTEGRATION START =====
+            if current_bpm > HEART_RATE_LIMIT:
+                cv2.putText(img, "⚠ High Heart Rate!", (display_w//2 - 130, 70), 
+                            cv2.FONT_HERSHEY_DUPLEX, 0.7, (0, 0, 255), 2)
+            # ===== ADDED HEART RATE INTEGRATION END =====
 
             # FPS Display
             c_time = time.time()

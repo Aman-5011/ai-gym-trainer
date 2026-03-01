@@ -59,7 +59,7 @@ def main():
     start_plan = input("Type YES to continue or NO to skip: ").strip().lower()
 
     # Create advisor object
-    advisor = PersonalizedFitnessAdvisor(api_key="AIzaSyBqhN11ZP_On5uUj4EJi0mesHghTkUxsnU")
+    advisor = PersonalizedFitnessAdvisor(api_key=" ")
     
 
     if start_plan != "yes":

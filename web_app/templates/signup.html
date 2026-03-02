@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Gym Trainer - Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <h2>AI GYM TRAINER</h2>
+            
+            <form action="/signup" method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="fitness_pro" required>
+                    <div id="username-feedback" class="error-message"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    <div id="password-feedback" class="error-message"></div>
+                </div>
+                
+                <button type="submit">Create Account</button>
+                
+                <div class="error-message"></div>
+            </form>
+            
+            <div class="footer-link">
+                Already have an account? <a href="/login">Login</a>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='signup.js') }}"></script>
+</body>
+</html>

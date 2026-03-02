@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header" style="margin-bottom: 40px;">
+    <h1 style="font-size: 2.2rem; font-weight: 800;">Welcome back, {{ profile.full_name }}</h1>
+    <p style="color: var(--text-muted); margin-top: 5px;">Here is a look at your current vitals and performance.</p>
+</div>
+
+<div class="card" style="border-left: 4px solid var(--accent-blue);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="font-weight: 700; letter-spacing: 0.5px;">PROFILE OVERVIEW</h3>
+        <a href="/profile" style="color: var(--accent-blue); text-decoration: none; font-size: 0.9rem; font-weight: 600;">Edit Profile</a>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px;">
+        <div class="stat-group">
+            <span style="display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Age</span>
+            <p style="font-size: 1.4rem; font-weight: 700; color: var(--text-primary);">{{ profile.age }} <small style="font-size: 0.9rem; font-weight: 400; color: var(--text-muted);">years</small></p>
+        </div>
+        <div class="stat-group">
+            <span style="display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Height</span>
+            <p style="font-size: 1.4rem; font-weight: 700; color: var(--text-primary);">{{ profile.height }} <small style="font-size: 0.9rem; font-weight: 400; color: var(--text-muted);">cm</small></p>
+        </div>
+        <div class="stat-group">
+            <span style="display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Weight</span>
+            <p style="font-size: 1.4rem; font-weight: 700; color: var(--text-primary);">{{ profile.weight }} <small style="font-size: 0.9rem; font-weight: 400; color: var(--text-muted);">kg</small></p>
+        </div>
+        <div class="stat-group">
+            <span style="display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Goal</span>
+            <p style="font-size: 1.1rem; font-weight: 700; color: var(--accent-blue);">{{ profile.goal.replace('_', ' ').title() }}</p>
+        </div>
+        <div class="stat-group">
+            <span style="display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">BMI</span>
+            {% set bmi = (profile.weight / ((profile.height / 100) ** 2)) | round(1) %}
+            <p style="font-size: 1.4rem; font-weight: 700; color: var(--success-green);">{{ bmi }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="background: linear-gradient(145deg, #1e293b, #111827);">
+    <h3 style="margin-bottom: 25px; font-weight: 700;">LAST WORKOUT SUMMARY</h3>
+    
+    {% if latest_workout %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+        <div style="padding: 15px; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <label style="display: block; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 5px;">EXERCISE</label>
+            <span style="font-size: 1.1rem; font-weight: 700;">{{ latest_workout.exercise.title() }}</span>
+        </div>
+        <div style="padding: 15px; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <label style="display: block; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 5px;">REPS</label>
+            <span style="font-size: 1.1rem; font-weight: 700; color: var(--accent-blue);">{{ latest_workout.reps }}</span>
+        </div>
+        <div style="padding: 15px; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <label style="display: block; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 5px;">ACCURACY</label>
+            <span style="font-size: 1.1rem; font-weight: 700; color: var(--accent-blue);">{{ latest_workout.accuracy }}%</span>
+        </div>
+        <div style="padding: 15px; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <label style="display: block; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 5px;">TARGET MET</label>
+            <span style="font-size: 1.1rem; font-weight: 700; color: {{ 'var(--success-green)' if latest_workout.target_completed else 'var(--error-red)' }};">
+                {{ 'YES' if latest_workout.target_completed else 'NO' }}
+            </span>
+        </div>
+    </div>
+    <div style="margin-top: 20px; font-size: 0.8rem; color: var(--text-muted); text-align: right;">
+        Session recorded on: {{ latest_workout.date }}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+        <p style="margin-bottom: 20px;">No workout sessions recorded yet.</p>
+        <a href="/workout" class="btn">Start Your First Workout</a>
+    </div>
+    {% endif %}
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a href="/diet-plan" class="btn" style="padding: 15px 40px; font-size: 1.1rem;">View Today's AI Guidance</a>
+</div>
+{% endblock %}

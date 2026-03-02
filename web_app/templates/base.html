@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Gym Trainer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="{{ active_page }}">
+
+    <aside id="sidebar">
+        <div class="sidebar-header">
+            <span class="logo-icon">⚡</span> 
+            <span class="logo-text">AI Gym Trainer</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/dashboard" class="nav-item {{ 'active' if active_page == 'dashboard' }}" data-icon="📊">
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="/diet-plan" class="nav-item {{ 'active' if active_page == 'ai_guidance' }}" data-icon="🤖">
+                <span class="nav-text">AI Guidance</span>
+            </a>
+            <a href="/workout" class="nav-item {{ 'active' if active_page == 'workout' }}" data-icon="🏋️">
+                <span class="nav-text">Workout</span>
+            </a>
+            <a href="{{ url_for('progress') }}" class="nav-item {{ 'active' if active_page == 'progress' }}" data-icon="📈">
+                <span class="nav-text">Progress</span>
+            </a>
+            <a href="/heartbeat" class="nav-item {{ 'active' if active_page == 'heartbeat' }}" data-icon="❤️">
+                <span class="nav-text">Heartbeat</span>
+            </a>
+            <a href="/profile" class="nav-item {{ 'active' if active_page == 'profile' }}" data-icon="👤">
+                <span class="nav-text">Profile</span>
+            </a>
+
+            <div class="sidebar-widget" id="heart-widget">
+                <div class="widget-label">LIVE PULSE</div>
+                <div class="widget-data">
+                    <span id="sidebar-bpm">--</span> 
+                    <small>BPM</small>
+                    <span id="sidebar-pulse" class="pulse-dot"></span>
+                </div>
+                <div id="sidebar-status" class="widget-status">Connecting...</div>
+            </div>
+
+            <a href="/logout" class="nav-item logout-link" data-icon="🚪">
+                <span class="nav-text">Logout</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div id="main-wrapper">
+        <header class="main-header">
+            <div class="header-left">
+                <button id="toggle-sidebar" class="hamburger-btn" aria-label="Toggle Navigation">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+            <div class="header-right">
+                <div class="header-status">
+                    <span class="status-dot"></span> System Ready
+                </div>
+            </div>
+        </header>
+
+        <main class="content-area">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='layout.js') }}"></script>
+</body>
+</html>

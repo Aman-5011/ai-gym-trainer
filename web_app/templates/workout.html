@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header" style="text-align: center; margin-bottom: 40px;">
+    <h1 style="font-size: 2.5rem;">Start Training</h1>
+    <p class="text-muted">AI-monitored sessions optimized for your {{ profile.fitness_level }} level.</p>
+</div>
+
+<div class="workout-grid">
+    <div class="workout-card">
+        <img src="{{ url_for('static', filename='images/squats.jpeg') }}" alt="Squats">
+        <div class="card-body" style="padding: 20px; text-align: center;">
+            <h3 style="margin-bottom: 10px;">Squats</h3>
+            <p style="color: var(--accent-blue); font-weight: 800; margin-bottom: 20px;">
+                TARGET: 
+                {% if profile.fitness_level == 'beginner' %} 10 REPS
+                {% elif profile.fitness_level == 'intermediate' %} 15 REPS
+                {% else %} 20 REPS {% endif %}
+            </p>
+            <form action="/start-workout" method="POST">
+                <input type="hidden" name="exercise" value="squats">
+                <button type="submit" class="btn" style="width: 100%;">Begin Session</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="workout-card">
+        <img src="{{ url_for('static', filename='images/pushups.jpeg') }}" alt="Pushups">
+        <div class="card-body" style="padding: 20px; text-align: center;">
+            <h3 style="margin-bottom: 10px;">Pushups</h3>
+            <p style="color: var(--accent-blue); font-weight: 800; margin-bottom: 20px;">
+                TARGET: 
+                {% if profile.fitness_level == 'beginner' %} 10 REPS
+                {% elif profile.fitness_level == 'intermediate' %} 15 REPS
+                {% else %} 20 REPS {% endif %}
+            </p>
+            <form action="/start-workout" method="POST">
+                <input type="hidden" name="exercise" value="pushups">
+                <button type="submit" class="btn" style="width: 100%;">Begin Session</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="workout-card">
+        <img src="{{ url_for('static', filename='images/biceps.jpeg') }}" alt="Biceps">
+        <div class="card-body" style="padding: 20px; text-align: center;">
+            <h3 style="margin-bottom: 10px;">Bicep Curls</h3>
+            <p style="color: var(--accent-blue); font-weight: 800; margin-bottom: 20px;">
+                TARGET: 
+                {% if profile.fitness_level == 'beginner' %} 10 REPS
+                {% elif profile.fitness_level == 'intermediate' %} 15 REPS
+                {% else %} 20 REPS {% endif %}
+            </p>
+            <form action="/start-workout" method="POST">
+                <input type="hidden" name="exercise" value="biceps">
+                <button type="submit" class="btn" style="width: 100%;">Begin Session</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

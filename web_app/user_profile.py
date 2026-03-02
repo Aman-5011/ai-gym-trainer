@@ -124,7 +124,6 @@ def save_workout_session(user_id, exercise, reps, accuracy):
     return manager.save_workout_session(user_id, exercise, reps, accuracy)
 
 if __name__ == "__main__":
-    # Internal test logic
     uid = setup_user()
     if uid:
         print(get_user_profile(uid))

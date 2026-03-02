@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Gym Trainer - Welcome</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-text">
+            <h1>Revolutionize Your <span>Fitness</span> With AI</h1>
+            <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;">
+                Experience real-time form correction, personalized AI guidance, and biometric tracking with our advanced pose-estimation engine.
+            </p>
+            <div class="cta-group">
+                <a href="/login" class="btn btn-outline" style="padding: 15px 40px; text-decoration: none;">Login Now</a>
+                <a href="/signup" class="btn btn-outline" style="padding: 15px 40px; text-decoration: none;">Join Free</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="{{ url_for('static', filename='images/hero.png') }}" alt="AI Trainer Hero">
+        </div>
+    </div>
+</body>
+</html>

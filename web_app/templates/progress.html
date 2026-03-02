@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Workout Progress</h1>
+    <p class="text-muted">Review your historical performance and consistency.</p>
+</div>
+
+{% if not workouts %}
+<div class="card" style="text-align: center; padding: 40px;">
+    <p style="color: #94a3b8; font-size: 1.1rem;">No workout history yet.</p>
+    <a href="/workout" class="btn" style="margin-top: 20px; text-decoration: none; display: inline-block;">Start First Session</a>
+</div>
+{% else %}
+<div class="card" style="padding: 0; overflow: hidden;">
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                <tr>
+                    <th style="padding: 16px;">Exercise</th>
+                    <th style="padding: 16px;">Reps</th>
+                    <th style="padding: 16px;">Accuracy</th>
+                    <th style="padding: 16px;">Calories</th>
+                    <th style="padding: 16px;">Target</th>
+                    <th style="padding: 16px;">Date</th>
+                </tr>
+            </thead>
+            <tbody style="color: #f8fafc;">
+                {% for workout in workouts %}
+                <tr style="border-bottom: 1px solid #334155; transition: background 0.2s ease;" onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background='transparent'">
+                    <td style="padding: 16px; font-weight: 600;">{{ workout.exercise | title }}</td>
+                    <td style="padding: 16px;">{{ workout.reps }}</td>
+                    <td style="padding: 16px;">{{ workout.accuracy }}%</td>
+                    <td style="padding: 16px;">{{ workout.calories_burned }} kcal</td>
+                    <td style="padding: 16px;">
+                        {% if workout.target_completed == 1 %}
+                            <span style="color: #00ff88; font-weight: 700;">Yes</span>
+                        {% else %}
+                            <span style="color: #ef4444; font-weight: 700;">No</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 16px; color: #94a3b8; font-size: 0.85rem;">{{ workout.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Gym Trainer - Setup Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <h2>Setup Your Profile</h2>
+            <p style="text-align: center; color: #888; font-size: 0.9rem; margin-bottom: 1.5rem;">
+                Help us customize your AI training experience.
+            </p>
+
+            <form action="/setup-profile" method="POST">
+                <div class="form-group">
+                    <label for="full_name">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" placeholder="John Doe" required>
+                    <div id="name-error" class="error-text"></div> 
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" placeholder="25" required>
+                    <div id="age-error" class="error-text"></div>
+                </div>
+
+                <div style="display: flex; gap: 15px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" id="height" name="height" step="0.1" placeholder="175" required>
+                        <div id="height-error" class="error-text"></div>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" name="weight" step="0.1" placeholder="70" required>
+                        <div id="weight-error" class="error-text"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="goal">Primary Goal</label>
+                    <select id="goal" name="goal" required>
+                        <option value="" disabled selected>Select your goal</option>
+                        <option value="fat_loss">Fat Loss</option>
+                        <option value="muscle_gain">Muscle Gain</option>
+                        <option value="endurance">Endurance</option>
+                        <option value="general_fitness">General Fitness</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fitness_level">Fitness Level</label>
+                    <select id="fitness_level" name="fitness_level" required>
+                        <option value="" disabled selected>Select your level</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+
+                <div id="profile-feedback" style="margin-bottom: 10px; font-size: 0.85rem; text-align: center;"></div>
+
+                <button type="submit" id="complete-button">Complete Profile</button>
+            </form>
+
+            {% if error %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='profile.js') }}"></script>
+</body>
+</html>

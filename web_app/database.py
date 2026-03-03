@@ -50,6 +50,17 @@ class DatabaseManager:
                 FOREIGN KEY (username) REFERENCES users (username)
             )
         ''')
-
+        # 4. User Daily Plan Table
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS user_daily_plans (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL,
+                day_number INTEGER NOT NULL,
+                plan_text TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                completed INTEGER DEFAULT 0,
+                FOREIGN KEY (username) REFERENCES users(username)
+            )
+        ''')
         conn.commit()
         conn.close()

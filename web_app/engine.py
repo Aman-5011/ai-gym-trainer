@@ -31,8 +31,7 @@ def main():
         "fitness_level": fitness_level
     }
 
-    # C. POSE ENGINE SETUP
-    cap = cv2.VideoCapture('vlog2.mp4') 
+    cap = cv2.VideoCapture('p3.mp4') 
     detector = pm.poseDetector()
     p_time = 0
     

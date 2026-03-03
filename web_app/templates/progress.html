@@ -12,6 +12,41 @@
     <a href="/workout" class="btn" style="margin-top: 20px; text-decoration: none; display: inline-block;">Start First Session</a>
 </div>
 {% else %}
+
+<div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+    <div class="stat-card" style="background: #1e293b; padding: 20px; border-radius: 15px; display: flex; align-items: center; border: 1px solid #334155;">
+        <div style="font-size: 2rem; margin-right: 15px;">📊</div>
+        <div>
+            <h3 style="font-size: 0.8rem; color: #94a3b8; margin: 0; text-transform: uppercase;">Total Reps</h3>
+            <p style="font-size: 1.5rem; font-weight: 700; color: #f8fafc; margin: 5px 0 0 0;">{{ summary.total_reps }}</p>
+        </div>
+    </div>
+
+    <div class="stat-card" style="background: #1e293b; padding: 20px; border-radius: 15px; display: flex; align-items: center; border: 1px solid #334155;">
+        <div style="font-size: 2rem; margin-right: 15px;">🎯</div>
+        <div>
+            <h3 style="font-size: 0.8rem; color: #94a3b8; margin: 0; text-transform: uppercase;">Avg. Accuracy</h3>
+            <p style="font-size: 1.5rem; font-weight: 700; color: #f8fafc; margin: 5px 0 0 0;">{{ summary.average_accuracy }}%</p>
+        </div>
+    </div>
+
+    <div class="stat-card" style="background: #1e293b; padding: 20px; border-radius: 15px; display: flex; align-items: center; border: 1px solid #334155;">
+        <div style="font-size: 2rem; margin-right: 15px;">🔥</div>
+        <div>
+            <h3 style="font-size: 0.8rem; color: #94a3b8; margin: 0; text-transform: uppercase;">Total Calories</h3>
+            <p style="font-size: 1.5rem; font-weight: 700; color: #f8fafc; margin: 5px 0 0 0;">{{ summary.total_calories }}</p>
+        </div>
+    </div>
+
+    <div class="stat-card" style="background: #1e293b; padding: 20px; border-radius: 15px; display: flex; align-items: center; border: 1px solid #334155;">
+        <div style="font-size: 2rem; margin-right: 15px;">📅</div>
+        <div>
+            <h3 style="font-size: 0.8rem; color: #94a3b8; margin: 0; text-transform: uppercase;">Sessions</h3>
+            <p style="font-size: 1.5rem; font-weight: 700; color: #f8fafc; margin: 5px 0 0 0;">{{ summary.total_workouts }}</p>
+        </div>
+    </div>
+</div>
+
 <div class="card" style="padding: 0; overflow: hidden;">
     <div style="overflow-x: auto;">
         <table style="width: 100%; border-collapse: collapse; text-align: left;">

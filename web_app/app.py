@@ -5,16 +5,14 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from auth_system import AuthSystem
 from profile_system import ProfileSystem
 from daily_plan_system import DailyPlanSystem
-# from gemini_service import PersonalizedFitnessAdvisor
-# from datetime import datetime
+from workout_system import WorkoutSystem
 
 app = Flask(__name__)
 app.secret_key = "super_secret_gym_key_123"
-gemini_key = os.getenv("GEMINI_API_KEY")
-
-daily_plan_system = DailyPlanSystem(api_key=gemini_key)
+daily_plan_system = DailyPlanSystem()
 auth = AuthSystem()
 profile_system = ProfileSystem()
+work_sys=WorkoutSystem()
 
 @app.route("/")
 def home():
@@ -117,7 +115,7 @@ def dashboard():
             calories = data.get("calories", 0.0)
 
             # Save to Database using auth_system instance
-            auth.save_workout(
+            work_sys.save_workout(
                 username=username,
                 exercise=exercise,
                 reps=reps,
@@ -132,11 +130,14 @@ def dashboard():
 
     # Fetch Profile, Plan, and Latest Workout data
     profile = profile_system.get_profile(username)
+    if profile is None:
+        return redirect(url_for("setup_profile"))
+    
     latest_day = daily_plan_system.get_latest_day(username)
     plan = daily_plan_system.get_plan_for_day(username, latest_day) if latest_day > 0 else None
     
     # Requirement: Fetch latest workout for current user
-    latest_workout = auth.get_latest_workout(username)
+    latest_workout = work_sys.get_latest_workout(username)
     
     return render_template(
         "dashboard.html", 
@@ -237,11 +238,12 @@ def progress():
         return redirect(url_for("login"))
 
     username = session["user"]
-    # Requirement: Use existing AuthSystem instance 'auth'
-    workouts = auth.get_all_workouts(username)
+    summary = work_sys.get_user_progress(username)
+    workouts = work_sys.get_all_workouts(username)
 
     return render_template(
         "progress.html",
+        summary=summary,
         workouts=workouts,
         active_page="progress"
     )

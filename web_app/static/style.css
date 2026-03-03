@@ -250,3 +250,52 @@ button:active, .btn:active {
     #main-wrapper { margin-left: 0; }
     #main-wrapper.full-width { margin-left: 0; }
 }
+
+/* Stats Grid Layout */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Individual Stat Card */
+.stat-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    font-size: 2rem;
+    margin-right: 15px;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+/* Color Coding for Icons */
+.reps { background-color: #e0f2fe; }
+.accuracy { background-color: #fef3c7; }
+.calories { background-color: #fee2e2; }
+.sessions { background-color: #dcfce7; }
+
+.stat-content h3 {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 5px 0 0 0;
+}

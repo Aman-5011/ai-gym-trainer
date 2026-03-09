@@ -1,22 +1,69 @@
+/* --- Floating Button (Centered) --- */
 .floating-chat-btn {
-    position: fixed; bottom: 30px; right: 30px;
-    width: 60px; height: 60px; border-radius: 50%;
-    background: var(--accent-blue); color: white;
-    font-size: 24px; border: none; cursor: pointer; z-index: 1001;
-    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    position: fixed; 
+    bottom: 30px; 
+    right: 30px;
+    width: 65px; 
+    height: 65px; 
+    border-radius: 50%;
+    background: var(--accent-blue); 
+    color: white;
+    font-size: 24px;
+    border: none; 
+    cursor: pointer; 
+    z-index: 1001;
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+    display: flex; /* Centers the icon */
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: transform 0.2s ease;
 }
 
+.floating-chat-btn:hover { transform: scale(1.05); }
+
+/* --- Chat Panel (Reshapable) --- */
 .chat-panel {
-    position: fixed; bottom: 100px; right: 30px;
-    width: 350px; height: 500px; background: var(--card-bg);
-    border-radius: 15px; border: 1px solid #334155;
-    display: flex; flex-direction: column; z-index: 1001;
+    position: fixed; 
+    bottom: 110px; 
+    right: 30px;
+    width: 380px;  /* Default Width */
+    height: 550px; /* Default Height */
+    background: var(--card-bg);
+    border-radius: 15px; 
+    border: 1px solid #334155;
+    display: flex; 
+    flex-direction: column; 
+    z-index: 1001;
+    overflow: hidden;
+    
+    /* Native Resizing Logic */
+    min-width: 300px;
+    min-height: 400px;
+    max-width: 90vw;
+    max-height: 80vh;
+}
+
+/* Custom Resize Handle (Top-Left) */
+.resize-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    cursor: nwse-resize;
+    background: linear-gradient(135deg, var(--accent-blue) 20%, transparent 20%);
+    z-index: 1002;
 }
 
 .chat-header {
-    padding: 15px; background: rgba(59, 130, 246, 0.1);
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid #334155; font-weight: 700;
+    padding: 15px 15px 15px 30px; /* Left padding for resize handle */
+    background: rgba(59, 130, 246, 0.1);
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 1px solid #334155; 
+    font-weight: 700;
 }
 
 .chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
@@ -26,51 +73,6 @@
 .ai { align-self: flex-start; background: var(--bg-dark); border: 1px solid #334155; }
 
 .chat-input-area { padding: 15px; border-top: 1px solid #334155; display: flex; gap: 10px; }
-.chat-input-area input { flex: 1; background: var(--bg-dark); border: 1px solid #334155; color: white; padding: 8px; border-radius: 5px; }
+.chat-input-area input { flex: 1; background: var(--bg-dark); border: 1px solid #334155; color: white; padding: 10px; border-radius: 8px; }
 
-.hidden { display: none; }
-
-.floating-chat-btn {
-    position: fixed; 
-    bottom: 30px; 
-    right: 30px;
-    width: 60px; 
-    height: 60px; 
-    border-radius: 50%;
-    background: var(--accent-blue); 
-    color: white;
-    border: none; 
-    cursor: pointer; 
-    z-index: 1001;
-    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
-    
-    /* ADD THESE THREE LINES TO CENTER THE ICON */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0; /* Remove any default button padding */
-}
-
-/* Add this to chat.css */
-.chat-panel {
-    /* ... your existing styles ... */
-    min-width: 300px;
-    min-height: 400px;
-    max-width: 90vw;
-    max-height: 80vh;
-    overflow: hidden; /* Prevent content from spilling during resize */
-    resize: both;    /* Enables the native browser resize handle in the bottom-right */
-    overflow: auto;  /* Required for the 'resize' property to work */
-}
-
-/* Optional: Custom Resize Handle Styling if the native one is too small */
-.chat-panel::after {
-    content: "";
-    width: 15px;
-    height: 15px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    cursor: nwse-resize; /* North-West to South-East cursor */
-    background: linear-gradient(135deg, transparent 50%, var(--accent-blue) 50%);
-}
+.hidden { display: none !important; }

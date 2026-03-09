@@ -305,7 +305,6 @@ def handle_chat():
         return jsonify({"error": "Unauthorized"}), 401
     
     username = session["user"]
-
     if request.method == "POST":
         data = request.get_json()
         user_query = data.get("message")

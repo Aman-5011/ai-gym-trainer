@@ -31,7 +31,7 @@ class PersonalizedFitnessAdvisor:
             return response.text.strip()
         except Exception as e:
             return f"AI Generation Error: {str(e)}"
-
+    
     def get_live_advice(self, exercise, rep_count, goal, level):
         prompt = f"""
         You are a strict fitness coach giving short live workout feedback.
@@ -56,3 +56,28 @@ class PersonalizedFitnessAdvisor:
             return text
         except Exception as e:
             return "Keep pushing! Focus on your breathing."
+        
+    def get_coach_response(self, query, profile):
+        # Use profile data for context
+        height_m = profile.get('height', 170) / 100 
+        weight = profile.get('weight', 70)
+        bmi = round(weight / (height_m ** 2), 1)
+        
+        prompt = f"""
+        You are an AI Gym Coach for {profile.get('full_name')}.
+        Goal: {profile.get('goal')}, Level: {profile.get('fitness_level')}, BMI: {bmi}.
+        User asks: "{query}"
+        Provide a short, professional, fitness-focused response (max 100 words).
+        """
+        try:
+            response = self.client.models.generate_content(
+                model="gemini-2.5-flash", 
+                contents=prompt
+            )
+            return response.text.strip()
+        except Exception as e:
+            if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                return ("The Coach is taking a quick breather (API Quota reached). "
+                        "Please try again in about 30 seconds!")
+            
+            return f"Coach is temporarily unavailable. Error: {str(e)}"

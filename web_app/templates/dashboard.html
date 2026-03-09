@@ -75,4 +75,20 @@
 <div style="text-align: center; margin-top: 20px;">
     <a href="/diet-plan" class="btn" style="padding: 15px 40px; font-size: 1.1rem;">View Today's AI Guidance</a>
 </div>
+
+<button id="chat-toggle" class="floating-chat-btn">💬</button>
+
+<div id="chat-panel" class="chat-panel hidden">
+    <div class="chat-header">
+        <span>AI Fitness Assistant</span>
+        <button id="reset-chat" title="Reset History">🔄</button>
+        <button id="close-chat">✖</button>
+    </div>
+    <div id="chat-messages" class="chat-messages"></div>
+    <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Ask about your workout...">
+        <button id="send-btn">Send</button>
+    </div>
+</div>
+
 {% endblock %}

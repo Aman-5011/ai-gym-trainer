@@ -62,5 +62,17 @@ class DatabaseManager:
                 FOREIGN KEY (username) REFERENCES users(username)
             )
         ''')
+
+        #this table will store your chats with AI
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS chat_history (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL,
+                message TEXT NOT NULL,
+                sender TEXT NOT NULL, -- 'user' or 'ai'
+                timestamp TEXT NOT NULL,
+                FOREIGN KEY (username) REFERENCES users (username)
+            )
+        ''')
         conn.commit()
         conn.close()

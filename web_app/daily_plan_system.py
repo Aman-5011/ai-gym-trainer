@@ -7,28 +7,9 @@ class DailyPlanSystem:
         self.db_name = db_name
         self.db_manager = DatabaseManager(db_name)
         self.advisor = PersonalizedFitnessAdvisor()
-        # self.init_table()
-
-    # def init_table(self):
-    #     """Initializes the user_daily_plans table."""
-    #     conn = sqlite3.connect(self.db_name)
-    #     cursor = conn.cursor()
-    #     cursor.execute('''
-    #         CREATE TABLE IF NOT EXISTS user_daily_plans (
-    #             id INTEGER PRIMARY KEY AUTOINCREMENT,
-    #             username TEXT NOT NULL,
-    #             day_number INTEGER NOT NULL,
-    #             plan_text TEXT NOT NULL,
-    #             created_at TEXT NOT NULL,
-    #             completed INTEGER DEFAULT 0,
-    #             FOREIGN KEY (username) REFERENCES users(username)
-    #         )
-    #     ''')
-    #     conn.commit()
-    #     conn.close()
 
     def generate_daily_plan(self, name, age, height, weight, fitness_level, goal, day_number):
-        """Calls the advisor specialist to get the AI text."""
+        #advisor ko call karega or plan generate karega .gemini se
         return self.advisor.generate_daily_plan_text(
             name, age, height, weight, fitness_level, goal, day_number
         )

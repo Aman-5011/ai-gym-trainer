@@ -1,12 +1,14 @@
 import os
 import json
 import subprocess
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session ,jsonify
 from auth_system import AuthSystem
 from profile_system import ProfileSystem
 from daily_plan_system import DailyPlanSystem
 from workout_system import WorkoutSystem
+from chat_system import ChatSystem # New Import
 
+chat_sys = ChatSystem()
 app = Flask(__name__)
 app.secret_key = "super_secret_gym_key_123"
 daily_plan_system = DailyPlanSystem()
@@ -293,6 +295,40 @@ def heartbeat():
         "heartbeat.html",
         active_page="heartbeat"
     )
+
+# At the very top of app.py, add 'jsonify' to your imports
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+
+@app.route("/api/chat", methods=["GET", "POST", "DELETE"])
+def handle_chat():
+    if "user" not in session:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    username = session["user"]
+
+    if request.method == "POST":
+        data = request.get_json()
+        user_query = data.get("message")
+        
+        profile = profile_system.get_profile(username)
+        
+        # Save user message
+        chat_sys.save_message(username, user_query, "user")
+        
+        # Get AI response
+        ai_response = daily_plan_system.advisor.get_coach_response(user_query, profile)
+        
+        # Save AI message
+        chat_sys.save_message(username, ai_response, "ai")
+        
+        return jsonify({"response": ai_response})
+
+    if request.method == "GET":
+        return jsonify(chat_sys.get_history(username))
+
+    if request.method == "DELETE":
+        chat_sys.clear_history(username)
+        return jsonify({"success": True})
 
 if __name__ == "__main__":
     app.run(debug=True)
